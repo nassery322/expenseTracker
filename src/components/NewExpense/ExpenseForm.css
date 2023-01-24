@@ -11,7 +11,9 @@
   margin-bottom: 0.5rem;
   display: block;
 }
-
+.error{
+  color:black; font-size: 1.2rem;
+}
 .new-expense__control input {
   font: inherit;
   padding: 0.5rem;

@@ -6,36 +6,38 @@ const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState('');
   const [enteredAmount, setEnteredAmount] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
-
+  const [error, setError] = useState(false)
 
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
-
+setError(false)
   };
 
   const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
-    // setUserInput({
-    //   ...userInput,
-    //   enteredAmount: event.target.value,
-    // });
+setError(false)
   };
 
   const dateChangeHandler = (event) => {
     setEnteredDate(event.target.value);
-
+setError(false)
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+    if(enteredAmount && enteredTitle && enteredDate){
+      const expenseData = {
+        title: enteredTitle,
+        amount: enteredAmount,
+        date: new Date(enteredDate),
+      };
+  
+      props.onSaveExpenseData(expenseData);
+      setError(false)
+    }else{setError(true)
 
-    const expenseData = {
-      title: enteredTitle,
-      amount: enteredAmount,
-      date: new Date(enteredDate),
-    };
-
-    props.onSaveExpenseData(expenseData);
+    }
+  
     setEnteredTitle('');
     setEnteredAmount('');
     setEnteredDate('');
@@ -73,6 +75,7 @@ const ExpenseForm = (props) => {
           />
         </div>
       </div>
+      {error && <p className='error'>Please fill in all the fields!</p>}
       <div className='new-expense__actions'>
         <button type="button" onClick={props.onCancel}>Cancel</button>
         <button type='submit'>Add Expense</button>
